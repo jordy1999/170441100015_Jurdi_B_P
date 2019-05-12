@@ -1,0 +1,738 @@
+
+
+
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      <meta http-equiv="x-ua-compatible" content="ie=edge">
+      
+        <meta name="description" content="Jordy's Datamining">
+      
+      
+      
+        <meta name="author" content="Jordy">
+      
+      
+        <meta name="lang:clipboard.copy" content="Copy to clipboard">
+      
+        <meta name="lang:clipboard.copied" content="Copied to clipboard">
+      
+        <meta name="lang:search.language" content="en">
+      
+        <meta name="lang:search.pipeline.stopwords" content="True">
+      
+        <meta name="lang:search.pipeline.trimmer" content="True">
+      
+        <meta name="lang:search.result.none" content="No matching documents">
+      
+        <meta name="lang:search.result.one" content="1 matching document">
+      
+        <meta name="lang:search.result.other" content="# matching documents">
+      
+        <meta name="lang:search.tokenizer" content="[\s\-]+">
+      
+      <link rel="shortcut icon" href="../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.0.4, mkdocs-material-4.2.0">
+    
+    
+      
+        <title>K-Nearest Neighbors - Jordy's Datamining</title>
+      
+    
+    
+      <link rel="stylesheet" href="../assets/stylesheets/application.750b69bd.css">
+      
+        <link rel="stylesheet" href="../assets/stylesheets/application-palette.224b79ff.css">
+      
+      
+        
+        
+        <meta name="theme-color" content="#ef5350">
+      
+    
+    
+      <script src="../assets/javascripts/modernizr.74668098.js"></script>
+    
+    
+      
+        <link href="https://fonts.gstatic.com" rel="preconnect" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,400i,700|Roboto+Mono">
+        <style>body,input{font-family:"Roboto","Helvetica Neue",Helvetica,Arial,sans-serif}code,kbd,pre{font-family:"Roboto Mono","Courier New",Courier,monospace}</style>
+      
+    
+    <link rel="stylesheet" href="../assets/fonts/material-icons.css">
+    
+    
+    
+      
+        
+<script>
+  window.ga = window.ga || function() {
+    (ga.q = ga.q || []).push(arguments)
+  }
+  ga.l = +new Date
+  /* Setup integration and send page view */
+  ga("create", "None", "auto")
+  ga("set", "anonymizeIp", true)
+  ga("send", "pageview")
+  /* Register handler to log search on blur */
+  document.addEventListener("DOMContentLoaded", () => {
+    if (document.forms.search) {
+      var query = document.forms.search.query
+      query.addEventListener("blur", function() {
+        if (this.value) {
+          var path = document.location.pathname;
+          ga("send", "pageview", path + "?q=" + this.value)
+        }
+      })
+    }
+  })
+</script>
+<script async src="https://www.google-analytics.com/analytics.js"></script>
+      
+    
+    
+  </head>
+  
+    
+    
+    <body dir="ltr" data-md-color-primary="red" data-md-color-accent="red">
+  
+    <svg class="md-svg">
+      <defs>
+        
+        
+          <svg xmlns="http://www.w3.org/2000/svg" width="416" height="448"
+    viewBox="0 0 416 448" id="__github">
+  <path fill="currentColor" d="M160 304q0 10-3.125 20.5t-10.75 19-18.125
+        8.5-18.125-8.5-10.75-19-3.125-20.5 3.125-20.5 10.75-19 18.125-8.5
+        18.125 8.5 10.75 19 3.125 20.5zM320 304q0 10-3.125 20.5t-10.75
+        19-18.125 8.5-18.125-8.5-10.75-19-3.125-20.5 3.125-20.5 10.75-19
+        18.125-8.5 18.125 8.5 10.75 19 3.125 20.5zM360
+        304q0-30-17.25-51t-46.75-21q-10.25 0-48.75 5.25-17.75 2.75-39.25
+        2.75t-39.25-2.75q-38-5.25-48.75-5.25-29.5 0-46.75 21t-17.25 51q0 22 8
+        38.375t20.25 25.75 30.5 15 35 7.375 37.25 1.75h42q20.5 0
+        37.25-1.75t35-7.375 30.5-15 20.25-25.75 8-38.375zM416 260q0 51.75-15.25
+        82.75-9.5 19.25-26.375 33.25t-35.25 21.5-42.5 11.875-42.875 5.5-41.75
+        1.125q-19.5 0-35.5-0.75t-36.875-3.125-38.125-7.5-34.25-12.875-30.25-20.25-21.5-28.75q-15.5-30.75-15.5-82.75
+        0-59.25 34-99-6.75-20.5-6.75-42.5 0-29 12.75-54.5 27 0 47.5 9.875t47.25
+        30.875q36.75-8.75 77.25-8.75 37 0 70 8 26.25-20.5
+        46.75-30.25t47.25-9.75q12.75 25.5 12.75 54.5 0 21.75-6.75 42 34 40 34
+        99.5z" />
+</svg>
+        
+      </defs>
+    </svg>
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" data-md-component="overlay" for="__drawer"></label>
+    
+      <a href="#k-nearest-neighbors" tabindex="1" class="md-skip">
+        Skip to content
+      </a>
+    
+    
+      <header class="md-header" data-md-component="header">
+  <nav class="md-header-nav md-grid">
+    <div class="md-flex">
+      <div class="md-flex__cell md-flex__cell--shrink">
+        <a href=".." title="Jordy's Datamining" class="md-header-nav__button md-logo">
+          
+            <i class="md-icon"></i>
+          
+        </a>
+      </div>
+      <div class="md-flex__cell md-flex__cell--shrink">
+        <label class="md-icon md-icon--menu md-header-nav__button" for="__drawer"></label>
+      </div>
+      <div class="md-flex__cell md-flex__cell--stretch">
+        <div class="md-flex__ellipsis md-header-nav__title" data-md-component="title">
+          
+            <span class="md-header-nav__topic">
+              Jordy's Datamining
+            </span>
+            <span class="md-header-nav__topic">
+              K-Nearest Neighbors
+            </span>
+          
+        </div>
+      </div>
+      <div class="md-flex__cell md-flex__cell--shrink">
+        
+          <label class="md-icon md-icon--search md-header-nav__button" for="__search"></label>
+          
+<div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="query" data-md-state="active">
+      <label class="md-icon md-search__icon" for="__search"></label>
+      <button type="reset" class="md-icon md-search__icon" data-md-component="reset" tabindex="-1">
+        &#xE5CD;
+      </button>
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="result">
+          <div class="md-search-result__meta">
+            Type to start searching
+          </div>
+          <ol class="md-search-result__list"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+        
+      </div>
+      
+        <div class="md-flex__cell md-flex__cell--shrink">
+          <div class="md-header-nav__source">
+            
+
+
+  
+
+<a href="https://github.com/jordy1999/170441100015_Jurdi_B_P" title="Go to repository" class="md-source" data-md-source="github">
+  
+    <div class="md-source__icon">
+      <svg viewBox="0 0 24 24" width="24" height="24">
+        <use xlink:href="#__github" width="24" height="24"></use>
+      </svg>
+    </div>
+  
+  <div class="md-source__repository">
+    jordy1999/170441100015_Jurdi_B_P
+  </div>
+</a>
+          </div>
+        </div>
+      
+    </div>
+  </nav>
+</header>
+    
+    <div class="md-container">
+      
+        
+      
+      
+        
+
+<nav class="md-tabs" data-md-component="tabs">
+  <div class="md-tabs__inner md-grid">
+    <ul class="md-tabs__list">
+      
+        
+  <li class="md-tabs__item">
+    
+      <a href=".." title="Welcome to Jordy's Datamining" class="md-tabs__link md-tabs__link--active">
+        Welcome to Jordy's Datamining
+      </a>
+    
+  </li>
+
+      
+        
+      
+        
+      
+    </ul>
+  </div>
+</nav>
+      
+      <main class="md-main">
+        <div class="md-main__inner md-grid" data-md-component="container">
+          
+            
+              <div class="md-sidebar md-sidebar--primary" data-md-component="navigation">
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    <nav class="md-nav md-nav--primary" data-md-level="0">
+  <label class="md-nav__title md-nav__title--site" for="__drawer">
+    <a href=".." title="Jordy's Datamining" class="md-nav__button md-logo">
+      
+        <i class="md-icon"></i>
+      
+    </a>
+    Jordy's Datamining
+  </label>
+  
+    <div class="md-nav__source">
+      
+
+
+  
+
+<a href="https://github.com/jordy1999/170441100015_Jurdi_B_P" title="Go to repository" class="md-source" data-md-source="github">
+  
+    <div class="md-source__icon">
+      <svg viewBox="0 0 24 24" width="24" height="24">
+        <use xlink:href="#__github" width="24" height="24"></use>
+      </svg>
+    </div>
+  
+  <div class="md-source__repository">
+    jordy1999/170441100015_Jurdi_B_P
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+      
+
+
+  <li class="md-nav__item">
+    <a href=".." title="Welcome to Jordy's Datamining" class="md-nav__link">
+      Welcome to Jordy's Datamining
+    </a>
+  </li>
+
+    
+      
+      
+      
+
+
+  <li class="md-nav__item">
+    <a href="../clustering/" title="K-Means Clustering" class="md-nav__link">
+      K-Means Clustering
+    </a>
+  </li>
+
+    
+      
+      
+      
+
+  
+
+
+  <li class="md-nav__item md-nav__item--active">
+    
+    <input class="md-toggle md-nav__toggle" data-md-toggle="toc" type="checkbox" id="__toc">
+    
+      
+    
+    
+      <label class="md-nav__link md-nav__link--active" for="__toc">
+        K-Nearest Neighbors
+      </label>
+    
+    <a href="./" title="K-Nearest Neighbors" class="md-nav__link md-nav__link--active">
+      K-Nearest Neighbors
+    </a>
+    
+      
+<nav class="md-nav md-nav--secondary">
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">Table of contents</label>
+    <ul class="md-nav__list" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#apa-itu-k-nn" title="Apa itu k-NN?" class="md-nav__link">
+    Apa itu k-NN?
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#langkah-langkah-k-nn" title="Langkah - langkah k-NN" class="md-nav__link">
+    Langkah - langkah k-NN
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#kelebihan-dan-kekurangan-k-nn" title="Kelebihan dan Kekurangan k-NN" class="md-nav__link">
+    Kelebihan dan Kekurangan k-NN
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#studi-kasus" title="Studi Kasus" class="md-nav__link">
+    Studi Kasus
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#kebutuhan" title="Kebutuhan" class="md-nav__link">
+    Kebutuhan
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#script-program" title="Script Program" class="md-nav__link">
+    Script Program
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#penjelasan-script" title="Penjelasan Script" class="md-nav__link">
+    Penjelasan Script
+  </a>
+  
+</li>
+      
+      
+      
+      
+      
+    </ul>
+  
+</nav>
+    
+  </li>
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="toc">
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+<nav class="md-nav md-nav--secondary">
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">Table of contents</label>
+    <ul class="md-nav__list" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#apa-itu-k-nn" title="Apa itu k-NN?" class="md-nav__link">
+    Apa itu k-NN?
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#langkah-langkah-k-nn" title="Langkah - langkah k-NN" class="md-nav__link">
+    Langkah - langkah k-NN
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#kelebihan-dan-kekurangan-k-nn" title="Kelebihan dan Kekurangan k-NN" class="md-nav__link">
+    Kelebihan dan Kekurangan k-NN
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#studi-kasus" title="Studi Kasus" class="md-nav__link">
+    Studi Kasus
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#kebutuhan" title="Kebutuhan" class="md-nav__link">
+    Kebutuhan
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#script-program" title="Script Program" class="md-nav__link">
+    Script Program
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#penjelasan-script" title="Penjelasan Script" class="md-nav__link">
+    Penjelasan Script
+  </a>
+  
+</li>
+      
+      
+      
+      
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          <div class="md-content">
+            <article class="md-content__inner md-typeset">
+              
+                
+                
+                <h1 id="k-nearest-neighbors"><strong>K-Nearest Neighbors</strong></h1>
+<h2 id="apa-itu-k-nn"><strong>Apa itu k-NN?</strong></h2>
+<p><strong>K-Nearest Neighbors (k-NN)</strong>. Jika diartikan ke dalam bahasa Indonesia, artinya adalah tetangga terdekat sebanyak K buah. K-Nearest Neighbor (K-NN) adalah suatu metode yang menggunakan algoritma supervised dimana hasil dari sampel uji yang baru diklasifikasikan berdasarkan mayoritas dari kategori pada K-NN. Tujuan dari algoritma ini adalah mengklasifikasi objek baru berdasakan atribut dan sampel latih. pengklasifikasian tidak menggunakan model apapun untuk dicocokkan dan hanya berdasarkan pada memori. Diberikan titik uji, akan ditemukan sejumlah K objek (titik training) yang paling dekat dengan titik uji. Klasifikasi menggunakan voting terbanyak di antara klasifikasi dari K objek. </p>
+<p>Algoritma K-NN menggunakan klasifikasi ketetanggaan sebagai nilai prediksi dari sample uji yang baru. Dekat atau jauhnya tetangga biasanya dihitung berdasarkan jarak Eucledian. Algoritma metode KNN sangatlah sederhana, bekerja dengan berdasarkan pada jarak terpendek dari sample uji ke sample latih untuk menentukan KNN nya. Setelah mengumpulkan KNN, kemudian diambil mayoritas dari KNN untuk dijadikan prediksi dari sample uji.</p>
+<h2 id="langkah-langkah-k-nn"><strong>Langkah - langkah k-NN</strong></h2>
+<ol>
+<li>
+<p>Tentukan jumlah kelompok neighbors (K) nya. Umumnya adalah 5.</p>
+</li>
+<li>
+<p>Ambil data K terdekat (K neighbors) dari data terbaru (umumnya 5 buah K) berdasarkan jarak      euclidean antar keduanya.</p>
+</li>
+<li>
+<p>Dari K-neighbors ini, hitung berapa banyak data poin yang masuk di masing-masing kategori.</p>
+</li>
+<li>
+<p>Masukkan data baru ini ke dalam kelompok yang memiliki jumlah K-neighbors terbanyak</p>
+</li>
+</ol>
+<h2 id="kelebihan-dan-kekurangan-k-nn"><strong>Kelebihan dan Kekurangan k-NN</strong></h2>
+<p><strong>Kelebihan  k-NN :</strong> </p>
+<ol>
+<li>memiliki beberapa kelebihan yaitu bahwa dia tangguh terhadap training data yang noisy dan efektif apabila data latih nya besar. </li>
+</ol>
+<p><strong>Kelemahan dari k-NN</strong></p>
+<ol>
+<li>
+<p>k-NN perlu menentukan nilai dari parameter K (jumlah dari tetangga terdekat) </p>
+</li>
+<li>
+<p>Pembelajaran berdasarkan jarak tidak jelas mengenai jenis jarak apa yang harus digunakan dan atribut mana yang harus digunakan untuk mendapatkan hasil yang terbaik </p>
+</li>
+<li>
+<p>Biaya komputasi cukup tinggi karena diperlukan perhitungan jarak dari tiap sample uji pada keseluruhan sample latih.</p>
+</li>
+</ol>
+<h2 id="studi-kasus"><strong>Studi Kasus</strong></h2>
+<p>Seorang pemilik toko hp ingin mecari tahu solusi iklan di internet, di mana ia memiliki data pelanggannya. Melalui data penghasilan dan usia. Pemilik hp tersebut ingin mengiklankan produknya di kelompok yang memiliki kemungkinan untuk membeli hp nya lebih tinggi. Sehingga nantinya klasifikasi ini bisa digunakan oleh pemilik toko hp untuk semakin memperkuat hubungan mereka terhadap konsumen. Misal untuk penguatan marketing, strategi penawaran yang tepat, tipe hp apa saja yang cocok bagi mereka, dll.</p>
+<h2 id="kebutuhan"><strong>Kebutuhan</strong></h2>
+<p>Sebelum memulai project sebaiknya lakukan hal - hal berikut, jika sudah silahkan bisa langsung menuju ke script program di bawah.</p>
+<ol>
+<li>
+<p>install bahasa pemrograman python, bisa anda download <a href="https://www.python.org/downloads/">di sini</a></p>
+</li>
+<li>
+<p>Dataset csv, bisa anda download datasetnya <a href="https://drive.google.com/file/d/1u18F2BN8CGZCiY4F6poc11sSRGRWusb2/view?usp=sharing">di sini</a>.</p>
+</li>
+<li>
+<p>Install numpy menggunakan <code>pip</code>:</p>
+</li>
+</ol>
+<pre><code class="sh">pip install numpy
+</code></pre>
+
+<ol>
+<li>Install matplotlib menggunakan <code>pip</code>:</li>
+</ol>
+<pre><code class="sh">pip install matplotlib
+</code></pre>
+
+<ol>
+<li>Install pandas menggunakan <code>pip</code>:</li>
+</ol>
+<pre><code class="sh">pip install pandas
+</code></pre>
+
+<h2 id="script-program"><strong>Script Program</strong></h2>
+<pre><code class="yaml"># Mengimpor library
+import numpy as np
+import matplotlib.pyplot as plt
+import pandas as pd
+
+# Mengimpor dataset
+dataset = pd.read_csv('Data_Customers_HP.csv')
+X = dataset.iloc[:, [2, 3]].values
+y = dataset.iloc[:, 4].values
+
+# Membagi dataset menjadi Training set and Test set
+from sklearn.model_selection import train_test_split
+X_train, X_test, y_train, y_test = train_test_split(X, y, test_size = 0.25, random_state = 0)
+
+# Feature Scaling
+from sklearn.preprocessing import StandardScaler
+sc = StandardScaler()
+X_train = sc.fit_transform(X_train)
+X_test = sc.transform(X_test)
+
+# Membuat model k-NN
+from sklearn.neighbors import KNeighborsClassifier
+classifier = KNeighborsClassifier(n_neighbors = 5, metric = 'minkowski', p = 2)
+classifier.fit(X_train, y_train)
+
+# Memprediksi Test set
+y_pred = classifier.predict(X_test)
+
+# Membuat Confusion Matrix
+from sklearn.metrics import confusion_matrix
+cm = confusion_matrix(y_test, y_pred)
+
+# Visualisasi hasil Training set
+from matplotlib.colors import ListedColormap
+X_set, y_set = X_train, y_train
+X1, X2 = np.meshgrid(np.arange(start = X_set[:, 0].min() - 1, stop = X_set[:, 0].max() + 1, step = 0.01),
+                     np.arange(start = X_set[:, 1].min() - 1, stop = X_set[:, 1].max() + 1, step = 0.01))
+plt.contourf(X1, X2, classifier.predict(np.array([X1.ravel(), X2.ravel()]).T).reshape(X1.shape),
+             alpha = 0.75, cmap = ListedColormap(('grey', 'black')))
+plt.xlim(X1.min(), X1.max())
+plt.ylim(X2.min(), X2.max())
+for i, j in enumerate(np.unique(y_set)):
+    plt.scatter(X_set[y_set == j, 0], X_set[y_set == j, 1],
+                c = ListedColormap(('yellow', 'red'))(i), label = j)
+plt.title('K-NN (Training set)')
+plt.xlabel('Usia')
+plt.ylabel('Penghasilan/bulan')
+plt.legend()
+plt.show()
+</code></pre>
+
+<h2 id="penjelasan-script"><strong>Penjelasan Script</strong></h2>
+<ul>
+<li>
+<p>Line 1-4 mengimpor library yang diperlukan.</p>
+</li>
+<li>
+<p>Line 7 mengimpor dataset.</p>
+</li>
+<li>
+<p>Line 8 mendefinisikan variabel X yaitu kolom usia dan penghasilan/bulan.</p>
+</li>
+<li>
+<p>Line 9 mendefinisikan variabel y yaitu keputusan beli/tidak.</p>
+</li>
+<li>
+<p>Line 12 mengimpor library dari sklearn untuk membagi dataset ke dalam training dan test set dengan      konfigurasi 75:25 dan <em>random number generator</em> 0.</p>
+</li>
+<li>
+<p>Line 13 mendefinisikan variabel training dan test set.</p>
+</li>
+<li>
+<p>Line 16-19 melakukan feature scaling.</p>
+</li>
+<li>
+<p>Line 22 mengimpor library k-NN.</p>
+</li>
+<li>
+<p>Line 23 adalah mendefinisikan variabel classifier sebagai model k-NN. </p>
+</li>
+<li>
+<p>T kita memilih jumlah K 5 sesuai default nya. Kemudian metric kit pilih ‘minkowski’, dan p kita isi 2, karena menggunakan euclidean distance</p>
+</li>
+<li>
+<p>Line 24 mengaplikasikan model ini terhadap X_train dan y_train, karena kita ingin melatih modelnya dari training set.</p>
+</li>
+<li>
+<p>Line 27 adalah mendefinisikan variabel y_pred untuk memprediksi test set. Kita memprediksinya dari      X_test, yang nantinya y_pred ini akan dibandingkan dengan y_test. Jika y_pred hasilnya mendekati y_test, maka bisa disimpulkan performanya cukup baik.</p>
+</li>
+<li>
+<p>Line 30 mengimpor library confusion_matrix dari sklearn untuk membuat confusion_matrix (CM)-nya. CM adalah perbandingan antara benar dan salah antara y_pred dengan y_test.</p>
+</li>
+<li>
+<p>Line 31 membuat variabel cm sebagai confusion matrix nya.</p>
+</li>
+<li>
+<p>Line 34-49 adalah perintah untuk visualisasi model k-NN terhadap training set. Hasilnya akan tampak      sebagai berikut:</p>
+</li>
+</ul>
+<p><img alt="" src="D:\Kuliah\Semester 4\Data Mining\app github pages\mkdocs-material-master\docs\assets\images\3.png" /></p>
+<p>Tampilan model k-NN dari training set. 
+   Gambar ini adalah hasil prediksi keputusan beli/tidak berdasarkan usia dan penghasilan/bulan yang dimiliki customers.</p>
+<p>Pada gambar di atas dapat kita lihat bahwa zona abu-abu adalah kelompok di mana pelanggan memutuskan untuk tidak membeli, sementara zona hitam adalah kelompok pelanggan memutuskan untuk membeli.</p>
+<p>Titik-titik kuning adalah data-data pelanggan yang memutuskan untuk tidak membeli, sedangkan titik-titik merah adalah data-data pelanggan yang memutuskan untuk membeli.</p>
+                
+                  
+                
+              
+              
+                
+
+
+              
+            </article>
+          </div>
+        </div>
+      </main>
+      
+        
+<footer class="md-footer">
+  
+    <div class="md-footer-nav">
+      <nav class="md-footer-nav__inner md-grid">
+        
+          <a href="../clustering/" title="K-Means Clustering" class="md-flex md-footer-nav__link md-footer-nav__link--prev" rel="prev">
+            <div class="md-flex__cell md-flex__cell--shrink">
+              <i class="md-icon md-icon--arrow-back md-footer-nav__button"></i>
+            </div>
+            <div class="md-flex__cell md-flex__cell--stretch md-footer-nav__title">
+              <span class="md-flex__ellipsis">
+                <span class="md-footer-nav__direction">
+                  Previous
+                </span>
+                K-Means Clustering
+              </span>
+            </div>
+          </a>
+        
+        
+      </nav>
+    </div>
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-footer-copyright">
+        
+          <div class="md-footer-copyright__highlight">
+            Copyright &copy; 2016 - 2019 Jordypro
+          </div>
+        
+        powered by
+        <a href="https://www.mkdocs.org">MkDocs</a>
+        and
+        <a href="https://squidfunk.github.io/mkdocs-material/">
+          Material for MkDocs</a>
+      </div>
+      
+  <div class="md-footer-social">
+    <link rel="stylesheet" href="../assets/fonts/font-awesome.css">
+    
+      <a href="https://github.com/jordy1999/170441100015_Jurdi_B_P" class="md-footer-social__link fa fa-globe"></a>
+    
+      <a href="https://github.com/jordy1999/170441100015_Jurdi_B_P" class="md-footer-social__link fa fa-github-alt"></a>
+    
+      <a href="https://twitter.com/qwertype" class="md-footer-social__link fa fa-twitter"></a>
+    
+      <a href="https://github.com/jordy1999/170441100015_Jurdi_B_P" class="md-footer-social__link fa fa-linkedin"></a>
+    
+  </div>
+
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    
+      <script src="../assets/javascripts/application.8c0d971c.js"></script>
+      
+      <script>app.initialize({version:"1.0.4",url:{base:".."}})</script>
+      
+    
+  </body>
+</html>
