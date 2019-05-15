@@ -350,15 +350,15 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#studi-kasus" title="Studi Kasus" class="md-nav__link">
-    Studi Kasus
+  <a href="#rumus" title="Rumus" class="md-nav__link">
+    Rumus
   </a>
   
 </li>
       
         <li class="md-nav__item">
-  <a href="#rumus" title="Rumus" class="md-nav__link">
-    Rumus
+  <a href="#studi-kasus" title="Studi Kasus" class="md-nav__link">
+    Studi Kasus
   </a>
   
 </li>
@@ -463,15 +463,15 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#studi-kasus" title="Studi Kasus" class="md-nav__link">
-    Studi Kasus
+  <a href="#rumus" title="Rumus" class="md-nav__link">
+    Rumus
   </a>
   
 </li>
       
         <li class="md-nav__item">
-  <a href="#rumus" title="Rumus" class="md-nav__link">
-    Rumus
+  <a href="#studi-kasus" title="Studi Kasus" class="md-nav__link">
+    Studi Kasus
   </a>
   
 </li>
@@ -553,19 +553,27 @@
 </ol>
 <p><strong>Kekurangan dari k-means :</strong></p>
 <ol>
-<li>Sebelum algoritma di jalankan, titik K diinisialisasikan secara random sehingga pengelompokan data yang di dapatkan bisa berbeda-beda. Namun apabila nilai yang diperoleh acak untuk penginisialisasi kurang baik maka pengelompokan yang didapatkn menjadi tidak optimal.</li>
-<li>Apabila terjebak dalam kasus yang biasanya di sebut dengan curse of dimensionality. Hal ini pun akan terjadi apabila salah satu data untuk melakukan pelatihan mempunyai dimensi yang sangat banyak, sebagai contoh; jika ada data pelatihan yang terdiri dari 2 buah atribut saja maka dimensinya ada 2 dimensi pula, namun akan berbeda jika ada 20 atribut maka akan ada 20 dimensi yang di miliki. Adapun salah satu dari cara kerja algoritma cluster ini ialah untuk mencari jarak terdekat dari antara k titik dangan titik lainnya. Apabila ingin mencari jarak untuk antar titik dari 2 dimensi hal itu masih mudah untuk di lakukan, namun bagaimana dengan 20 buah dimensi hal tersebut akan menjadi lebih sulit untuk di lakukan pencarian jarak.</li>
-<li>Apabila hanya ada terdapat beberapa buah titik sampel data yang ada, maka hal yang mudah untuk melakukan penghitungan dan mencari jarak titik terdekat dengan k titik yang telah di lakukan inisialisasi yang secara acak. Namun jika ada banyak titik data, misalkan satu juta data, maka perhitungan dan pencarian titik terdekat akan sangat membutuhkan waktu yang lama. Proses tersebut dapat dipercepat namun dibutuhkan sebuah struktur data yang lebih rumit seperti kD-tree atau hashing untuk melakukan proses tersebut.</li>
-<li>Adanya penggunaan k buah random, tidak ada jaminan untuk menemukan kumpulan cluster yang optimal.</li>
+<li>
+<p>Sebelum algoritma di jalankan, titik K diinisialisasikan secara random sehingga pengelompokan data yang di dapatkan bisa berbeda-beda. Namun apabila nilai yang diperoleh acak untuk penginisialisasi kurang baik maka pengelompokan yang didapatkn menjadi tidak optimal.</p>
+</li>
+<li>
+<p>Apabila terjebak dalam kasus yang biasanya di sebut dengan curse of dimensionality. Hal ini pun akan terjadi apabila salah satu data untuk melakukan pelatihan mempunyai dimensi yang sangat banyak, sebagai contoh; jika ada data pelatihan yang terdiri dari 2 buah atribut saja maka dimensinya ada 2 dimensi pula, namun akan berbeda jika ada 20 atribut maka akan ada 20 dimensi yang di miliki. Adapun salah satu dari cara kerja algoritma cluster ini ialah untuk mencari jarak terdekat dari antara k titik dangan titik lainnya. Apabila ingin mencari jarak untuk antar titik dari 2 dimensi hal itu masih mudah untuk di lakukan, namun bagaimana dengan 20 buah dimensi hal tersebut akan menjadi lebih sulit untuk di lakukan pencarian jarak.</p>
+</li>
+<li>
+<p>Apabila hanya ada terdapat beberapa buah titik sampel data yang ada, maka hal yang mudah untuk melakukan penghitungan dan mencari jarak titik terdekat dengan k titik yang telah di lakukan inisialisasi yang secara acak. Namun jika ada banyak titik data, misalkan satu juta data, maka perhitungan dan pencarian titik terdekat akan sangat membutuhkan waktu yang lama. Proses tersebut dapat dipercepat namun dibutuhkan sebuah struktur data yang lebih rumit seperti kD-tree atau hashing untuk melakukan proses tersebut.</p>
+</li>
+<li>
+<p>Adanya penggunaan k buah random, tidak ada jaminan untuk menemukan kumpulan cluster yang optimal.</p>
+</li>
 </ol>
-<h2 id="studi-kasus"><strong>Studi Kasus</strong></h2>
-<p>Seorang <em>data scientist</em> profesional diminta oleh klien untuk menganalisis data customers yang berkunjung ke suatu Alfamart. Mereka data pelanggan setia, namun mereka bingung cara mengelompokkan data ini, sehingga nantinya pengelompokan ini bisa mereka gunakan untuk semakin memperkuat hubungan mereka terhadap konsumen. Misal untuk penguatan marketing, strategi penawaran yang tepat, kebutuhan apa saja yang cocok bagi mereka, dll.</p>
 <h2 id="rumus"><strong>Rumus</strong></h2>
 <p>Rumus - rumus yang digunakan pada metode ini antara lain :</p>
 <ul>
 <li>WCSS : rumus ini digunakan untuk mencari jumlah cluster awal yang tepat, yang akan digunakan nanti pada proses metode elbow</li>
 </ul>
-<p><img alt="" src="../assets/images/WCSS.png" /></p>
+<p><img alt="" src="D:/Kuliah/Semester%204/Data%20Mining/app%20github%20pages/mkdocs-material-master/docs/assets/images/WCSS.png" /></p>
+<h2 id="studi-kasus"><strong>Studi Kasus</strong></h2>
+<p>Seorang <em>data scientist</em> profesional diminta oleh klien untuk menganalisis data customers yang berkunjung ke suatu Alfamart. Mereka data pelanggan setia, namun mereka bingung cara mengelompokkan data ini, sehingga nantinya pengelompokan ini bisa mereka gunakan untuk semakin memperkuat hubungan mereka terhadap konsumen. Misal untuk penguatan marketing, strategi penawaran yang tepat, kebutuhan apa saja yang cocok bagi mereka, dll.</p>
 <h2 id="kebutuhan"><strong>Kebutuhan</strong></h2>
 <p>Sebelum memulai project sebaiknya lakukan hal - hal berikut, jika sudah silahkan bisa langsung menuju ke script program di bawah.</p>
 <ol>
@@ -576,21 +584,15 @@
 <p>Dataset csv, bisa anda download datasetnya <a href="https://drive.google.com/file/d/1Jg_7Xg4z9TFE2euqv5mdgC_3_BQYyTfg/view?usp=sharing">di sini</a>.</p>
 </li>
 <li>
-<p>Install numpy menggunakan <code>pip</code>:</p>
+<p>Install numpy, matplotlib, pandas menggunakan <code>pip</code>:</p>
 </li>
 </ol>
 <pre><code class="sh">pip install numpy
 </code></pre>
 
-<ol>
-<li>Install matplotlib menggunakan <code>pip</code>:</li>
-</ol>
 <pre><code class="sh">pip install matplotlib
 </code></pre>
 
-<ol>
-<li>Install pandas menggunakan <code>pip</code>:</li>
-</ol>
 <pre><code class="sh">pip install pandas
 </code></pre>
 
